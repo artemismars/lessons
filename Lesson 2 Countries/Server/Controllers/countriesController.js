@@ -65,7 +65,7 @@ function getLargestPopulation(req, res) {
 }
 
 function getLifeExpectancy(req, res) {
-  const data = req.params.id;
+  const data = req.sanitize(req.params.id);
   con.query(
     `select * from country where lifeExpectancy between ? and 100 order by lifeExpectancy asc`,
     data,
