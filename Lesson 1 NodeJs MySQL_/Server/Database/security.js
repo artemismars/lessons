@@ -3,7 +3,7 @@ const con = require("mysql").createConnection({
   user: "root",
   port: "3306",
   password: "0000",
-  database: "sakila",
+  database: "account",
 });
 
 module.exports = con;
