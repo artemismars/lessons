@@ -1,10 +1,11 @@
 const mysql = require("mysql");
+const password = require("./password");
 
 const con = mysql.createConnection({
   host: "nunops.com",
   port: "3306",
   user: "nunops_user",
-  password: "tR?D@Pn84REm",
+  password: password,
   database: "nunops_countries",
 });
 
