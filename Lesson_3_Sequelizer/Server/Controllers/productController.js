@@ -32,10 +32,10 @@ function addProduct(req, res) {
 function deleteProduct(req, res) {
   sequelize
     .query(
-      "delete from product where productName = :productName",
+      "delete from product where id_product = :id_product",
       {
         replacements: {
-          productName: req.body.productName,
+          productName: req.params.id,
         },
         type: QueryTypes.DELETE,
       },
@@ -52,10 +52,10 @@ function deleteProduct(req, res) {
     });
 }
 
-function getProduct(req, res) {
+function getProducts(req, res) {
   sequelize
     .query(
-      "select * from product where productName = :productName",
+      "select * from product",
       {
         replacements: {
           productName: req.sanitize(req.body.productName),
@@ -76,15 +76,40 @@ function getProduct(req, res) {
     });
 }
 
+function getProductById(req, res) {
+  sequelize
+    .query(
+      "select * from product where id_product = :id_product",
+      {
+        replacements: {
+          id_product: req.params.id,
+        },
+        type: QueryTypes.SELECT,
+      },
+      {
+        model: model.Product,
+      }
+    )
+    .then((data) => {
+      // console.log(data);
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      // console.log(err);
+      res.status(400).send("query went wrong, please try it again later!");
+    });
+}
+
 function updateProduct(req, res) {
   sequelize
     .query(
-      "update product set productName = :productName, price = :price, company = :company",
+      "update product set productName = :productName, price = :price, company = :company where id_product = :id_product",
       {
         replacements: {
           productName: req.body.productName,
           price: req.body.price,
           company: req.body.company,
+          id_product: req.params.id,
         },
         type: QueryTypes.UPDATE,
       },
@@ -105,6 +130,7 @@ function updateProduct(req, res) {
 module.exports = {
   addProduct,
   deleteProduct,
-  getProduct,
+  getProducts,
+  getProductById,
   updateProduct,
 };
