@@ -35,7 +35,7 @@ function deleteProduct(req, res) {
       "delete from product where id_product = :id_product",
       {
         replacements: {
-          productName: req.params.id,
+          productName: req.sanitize(req.params.id),
         },
         type: QueryTypes.DELETE,
       },
@@ -82,7 +82,7 @@ function getProductById(req, res) {
       "select * from product where id_product = :id_product",
       {
         replacements: {
-          id_product: req.params.id,
+          id_product: req.sanitize(req.params.id),
         },
         type: QueryTypes.SELECT,
       },
