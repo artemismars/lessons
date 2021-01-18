@@ -31,11 +31,11 @@ Product.init(
   }
 );
 
-console.log("product model here");
+// console.log("product model here");
 
 sequelize
   .sync()
-  .then((data) => console.log(data))
+  .then()
   .catch((error) => console.log(error));
 
 module.exports = {

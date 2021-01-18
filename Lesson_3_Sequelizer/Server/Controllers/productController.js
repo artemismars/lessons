@@ -1,5 +1,6 @@
 const model = require("../Models/productModel");
 const sequelize = require("../Database/database");
+const { QueryTypes } = require("sequelize");
 
 function addProduct(req, res) {
   sequelize
@@ -13,6 +14,7 @@ function addProduct(req, res) {
             req.body.company,
           ],
         },
+        type: QueryTypes.INSERT,
       },
       {
         model: model.Product,
@@ -35,6 +37,7 @@ function deleteProduct(req, res) {
         replacements: {
           productName: req.body.productName,
         },
+        type: QueryTypes.DELETE,
       },
       {
         model: model.Product,
@@ -49,7 +52,59 @@ function deleteProduct(req, res) {
     });
 }
 
+function getProduct(req, res) {
+  sequelize
+    .query(
+      "select * from product where productName = :productName",
+      {
+        replacements: {
+          productName: req.sanitize(req.body.productName),
+        },
+        type: QueryTypes.SELECT,
+      },
+      {
+        model: model.Product,
+      }
+    )
+    .then((data) => {
+      // console.log(data);
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).send(`query went wrong please try again later!`);
+    });
+}
+
+function updateProduct(req, res) {
+  sequelize
+    .query(
+      "update product set productName = :productName, price = :price, company = :company",
+      {
+        replacements: {
+          productName: req.body.productName,
+          price: req.body.price,
+          company: req.body.company,
+        },
+        type: QueryTypes.UPDATE,
+      },
+      {
+        model: model.Product,
+      }
+    )
+    .then((data) => {
+      // console.log(data);
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400).send(`query went wrong please try it again later`);
+    });
+}
+
 module.exports = {
   addProduct,
   deleteProduct,
+  getProduct,
+  updateProduct,
 };
