@@ -25,6 +25,30 @@ function addUser(req, res) {
   });
 }
 
+function updateUsername(req, res) {
+  sequelize
+    .query(
+      "UPDATE user SET username = :username where id_user = :id",
+      {
+        replacements: {
+          username: req.sanitize(req.body.username),
+          id: req.sanitize(req.params.id),
+        },
+      },
+      {
+        model: model.User,
+      }
+    )
+    .then((data) => {
+      res.status(201).json(data);
+    })
+    .catch((error) => {
+      console.log(error);
+      res.status(400).send("something went wrong, please try again later");
+    });
+}
+
 module.exports = {
   addUser,
+  updateUsername,
 };
