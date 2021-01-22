@@ -1,4 +1,5 @@
 node_modules/
 
-# database password
-Server/database/password.js
+Server/database/security.js
+
+.env

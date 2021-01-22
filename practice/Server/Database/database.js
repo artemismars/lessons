@@ -1,13 +1,14 @@
 const { Sequelize } = require("sequelize");
-const password = require("./password");
+const pwd = require("./security");
 
-const sequelize = new Sequelize("restaurant", "root", password, {
+const sequelize = new Sequelize("vehicle", "root", pwd, {
   host: "localhost",
+  port: "3306",
   dialect: "mysql",
-  port: 3306,
   logging: false,
   define: {
     timestamps: false,
+    createdAt: true,
   },
 });
 

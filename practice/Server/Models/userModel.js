@@ -1,26 +1,22 @@
-const { Model, DataTypes } = require("sequelize");
-const sequelize = require("../Database/database");
+const { Model, INTEGER, STRING } = require("sequelize");
+const { sequelize } = require("../Models/truckModel");
 
 class User extends Model {}
 
 User.init(
   {
     id_user: {
-      type: DataTypes.INTEGER,
+      type: INTEGER,
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,
     },
     username: {
-      type: DataTypes.STRING(20),
+      type: STRING,
       allowNull: false,
     },
     password: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING(45),
+      type: STRING,
       allowNull: false,
     },
   },
@@ -34,6 +30,8 @@ User.init(
 sequelize
   .sync()
   .then()
-  .catch((err) => console.log(err));
+  .catch((err) => {
+    console.log(err);
+  });
 
 module.exports = User;

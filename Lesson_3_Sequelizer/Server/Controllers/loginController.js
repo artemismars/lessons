@@ -40,7 +40,7 @@ function login(req, res) {
             }
           );
 
-          res.status(200).send("Login successfully");
+          // res.status(200).send("Login successfully");
         } else {
           res.status(400).send("Unsername or Password incorrect");
         }
